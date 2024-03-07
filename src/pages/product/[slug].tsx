@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import '../../app/globals.css';
 import { addEllipses } from '../../utils/common-utils';
 import Image from 'next/image';
-import ReactImageMagnify from 'react-image-magnify';
+// import ReactImageMagnify from 'react-image-magnify';
 
 interface Product {
   id: number;
@@ -55,7 +55,7 @@ const ProductPage = () => {
       >
         <div className="flex">
           <div className="w-[500px] h-[500px]">
-            <ReactImageMagnify
+            {/* <ReactImageMagnify
               {...{
                 smallImage: {
                   alt: 'Product Image',
@@ -71,8 +71,8 @@ const ProductPage = () => {
                 },
                 isHintEnabled: true
               }}
-            />
-            {/* <Image src={product.image} height={400} width={400} alt='product image'/> */}
+            /> */}
+            <Image src={product.image} height={400} width={400} alt='product image'/>
           </div>
           <div className="p-6 w-1/2">
             <h1 className="text-2xl font-semibold mb-2 text-red-500">{product.title}</h1>
