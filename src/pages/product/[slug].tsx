@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-// import ReactImageMagnify from 'react-image-magnify';
+import ReactImageMagnify from 'react-image-magnify';
 import '../../app/globals.css';
 import { addEllipses } from '../../utils/common-utils';
 import Image from 'next/image';
@@ -54,7 +54,7 @@ const ProductPage = () => {
       >
         <div className="flex">
           <div className="w-[500px] h-[500px]">
-            {/* <ReactImageMagnify
+            <ReactImageMagnify
               {...{
                 smallImage: {
                   alt: 'Product Image',
@@ -68,7 +68,7 @@ const ProductPage = () => {
                 },
                 isHintEnabled: true
               }}
-            /> */}
+            />
             <Image src={product.image} alt='product image'/>
           </div>
           <div className="p-6 w-1/2">
