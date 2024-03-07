@@ -1,3 +1,5 @@
-export const presets = ['next/babel'];
-export const plugins = [];
+module.exports = {
+    presets: ['next/babel'],
+    plugins: [],
+  };
   
