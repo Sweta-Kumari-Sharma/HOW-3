@@ -42,7 +42,7 @@ const ProductPage = () => {
     <div>
       <h1>{product.title}</h1>
       <p>Price: ${product.price}</p>
-      <p>Description: { product.description}</p>
+      {/* <p>Description: { product.description}</p> */}
       <p>Category: {product.category}</p>
       <p>Rating: {product.rating.rate} ({product.rating.count} ratings)</p>
       <img src={product.image} alt={product.title} style={{ width: '200px' }} />
