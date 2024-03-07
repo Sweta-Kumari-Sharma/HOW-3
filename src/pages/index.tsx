@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
 import '../app/globals.css'
+import Navbar from '@/components/Navbar';
 
 interface Product {
   id: number;
@@ -35,7 +36,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className=" mx-auto">
+    <>
+    <div className='flex '>
+        <div className='w-[15%]'>
+
+        <Navbar/>
+        </div>
+    <div className=" mx-auto mr-12 w-[85%]">
       
       <h1 className="text-3xl font-bold mb-4">Welcome to the Home Page</h1>
       <div className="overflow-x-auto">
@@ -45,7 +52,7 @@ const HomePage = () => {
               <th className="px-4 py-2 hidden md:table-cell">ID</th>
               <th className="px-4 py-2">Title</th>
               <th className="px-4 py-2 hidden md:table-cell">Price</th>
-              <th className="px-4 py-2 hidden md:table-cell">Description</th>
+              {/* <th className="px-4 py-2 hidden md:table-cell">Description</th> */}
               <th className="px-4 py-2 hidden md:table-cell">Category</th>
               <th className="px-4 py-2">Image</th>
               <th className="px-4 py-2 hidden md:table-cell">Rating</th>
@@ -58,9 +65,9 @@ const HomePage = () => {
                 <td className="border px-4 py-2 hidden md:table-cell">{product.id}</td>
                 <td className="border px-4 py-2">{product.title}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">${product.price}</td>
-                <td className="border px-4 py-2 hidden md:table-cell">{product.description}</td>
+                {/* <td className="border px-4 py-2 hidden md:table-cell">{product.description}</td> */}
                 <td className="border px-4 py-2 hidden md:table-cell">{product.category}</td>
-                <td className="border px-4 py-2"><img src={product.image} alt={product.title} className="w-[100px] h-[100px]" /></td>
+                <td className="border px-4 py-2"><img src={product.image} alt={product.title} className="w-24 h-auto" /></td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.rating.rate} ({product.rating.count} ratings)</td>
                 <td className="border px-4 py-2">
                   <Link href={`/product/${product.id}`}>
@@ -73,6 +80,8 @@ const HomePage = () => {
         </table>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 
