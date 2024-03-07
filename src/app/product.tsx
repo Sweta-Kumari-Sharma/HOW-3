@@ -1,12 +1,23 @@
-'use client'
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
+interface Product {
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+  image: string;
+}
+
 const ProductPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null); // Add type annotation
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -31,7 +42,7 @@ const ProductPage = () => {
     <div>
       <h1>{product.title}</h1>
       <p>Price: ${product.price}</p>
-      <p>Description: {addElli product.description}</p>
+      <p>Description: { product.description}</p>
       <p>Category: {product.category}</p>
       <p>Rating: {product.rating.rate} ({product.rating.count} ratings)</p>
       <img src={product.image} alt={product.title} style={{ width: '200px' }} />

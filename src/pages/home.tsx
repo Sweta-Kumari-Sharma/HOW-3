@@ -3,8 +3,21 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
+
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]); // Add type annotation
 
   useEffect(() => {
     const fetchProducts = async () => {

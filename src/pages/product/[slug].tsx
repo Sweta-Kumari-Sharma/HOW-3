@@ -6,15 +6,28 @@ import ReactImageMagnify from 'react-image-magnify';
 import '../../app/globals.css';
 import { addEllipses } from '../../utils/common-utils';
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
+
 const ProductPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null); // Add type annotation
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://fakestoreapi.com/products/${slug}`);
+        const response = await axios.get<Product>(`https://fakestoreapi.com/products/${slug}`);
         setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -39,21 +52,16 @@ const ProductPage = () => {
         className="max-w-[80vw] min-w-[70vw] min-h-[70vh] max-h-[80vh] bg-white rounded-lg overflow-hidden"
       >
         <div className="flex">
-        {/* <div className="w-1/2"> */}
-        <div className="w-[500px] h-[500px]">
+          <div className="w-[500px] h-[500px]">
             <ReactImageMagnify
               {...{
                 smallImage: {
                   alt: 'Product Image',
                   src: product.image,
                   isFluidWidth: true,
-                  // width:140,
-                  // height:162,
                 },
                 largeImage: {
                   src: product.image,
-                  // width: 836,
-                  // height: 1100,
                   width: 1129,
                   height: 1750,
                 },
@@ -61,10 +69,10 @@ const ProductPage = () => {
               }}
             />
           </div>
-          <div className="p-6 w-1/2"> {/* Adjust the width as needed */}
+          <div className="p-6 w-1/2">
             <h1 className="text-2xl font-semibold mb-2 text-red-500">{product.title}</h1>
             <p className="text-gray-700 mb-2">Price: ${product.price}</p>
-            <p className="text-gray-700 mb-2">Description: {addEllipses(product.description, 100)}</p> {/* Adjust the limit as needed */}
+            <p className="text-gray-700 mb-2">Description: {addEllipses(product.description, 100)}</p>
             <p className="text-gray-700 mb-2">Category: {product.category}</p>
             <p className="text-gray-700 mb-2">Rating: {product.rating.rate} ({product.rating.count} ratings)</p>
             <motion.button
