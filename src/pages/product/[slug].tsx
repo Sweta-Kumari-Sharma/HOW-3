@@ -120,7 +120,7 @@ const ProductPage = () => {
           className="  min-h-[70vh] md:max-h-[100vh] bg-white rounded-lg overflow-hidden"
         >
           <div className="flex flex-col md:flex-row">
-            <div className=" my-4 p-4  relative">
+            <div className="md:max-h-[85vh] w-auto my-4 p-4  relative">
               <ReactImageMagnify
                 smallImage={{
                   alt: 'Product Image',
