@@ -6,13 +6,13 @@ import { motion } from 'framer-motion';
 import { FaShoppingCart, FaShoppingBag, FaHeart } from 'react-icons/fa'; // Import icons
 import Rating from 'react-rating-stars-component'; // Import star rating component
 import '../../app/globals.css';
-import { addEllipses } from '../../utils/common-utils';
+import { addEllipses } from '@/utils/common-utils';
 import ReactImageMagnify from 'react-image-magnify';
 import { css } from '@emotion/react';
 import { BounceLoader } from 'react-spinners';
 import { FaTag } from 'react-icons/fa6';
 import Navbar from '@/components/Navbar';
-import { useCart } from '../../context/cartContext';
+import { useCart } from '@/context/cartContext';
 
 // Interface for Product
 interface Product {
