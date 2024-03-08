@@ -1,6 +1,4 @@
-// CartContext.tsx
-'use client'
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, PropsWithChildren } from 'react';
 
 interface CartContextType {
   cartItems: number[];
@@ -13,7 +11,7 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC = ({ children }) => {
+export const CartProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const [cartItems, setCartItems] = useState<number[]>([]);
   const [wishlistItems, setWishlistItems] = useState<number[]>([]);
 
