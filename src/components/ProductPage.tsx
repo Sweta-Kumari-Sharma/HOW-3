@@ -31,32 +31,31 @@ interface Product {
 const ProductPage = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { addToCart, addToWishlist, removeFromWishlist, removeFromCart } = useCart();
+  const { addToCart, addToWishlist, removeFromWishlist } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
   const [isInCart, setIsInCart] = useState<boolean>(false); // State for cart
 
   const toggleWishlist = () => {
-    const productID = product?.id as number;
     if (isInWishlist) {
-      removeFromWishlist(productID);
+      removeFromWishlist(product?.id as number);
     } else {
-      addToWishlist(productID);
+      addToWishlist(product?.id as number);
     }
     setIsInWishlist(!isInWishlist);
   };
-  
+
   const toggleCart = () => {
-    const productID = product?.id as number;
     if (isInCart) {
-      removeFromCart(productID);
+      // Implement logic to remove from cart
+      console.log('Removed from Cart');
     } else {
-      addToCart(productID);
+      addToCart(product?.id as number);
+      console.log('Added to Cart');
     }
     setIsInCart(!isInCart);
   };
-  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -64,32 +63,23 @@ const ProductPage = () => {
         const response = await axios.get<Product>(`https://fakestoreapi.com/products/${slug}`);
         setProduct(response.data);
         setLoading(false);
-        
         // Check if product is in wishlist
-        const wishlistItems = useCart().wishlistItems;
-        if (wishlistItems.includes(response.data.id)) {
-          setIsInWishlist(true);
-        } else {
-          setIsInWishlist(false);
-        }
-        
-        // Check if product is in cart
-        const cartItems = useCart().cartItems;
-        if (cartItems.includes(response.data.id)) {
-          setIsInCart(true);
-        } else {
-          setIsInCart(false);
+        const wishlistItems = localStorage.getItem('wishlist');
+        if (wishlistItems) {
+          const parsedWishlist: number[] = JSON.parse(wishlistItems);
+          if (parsedWishlist.includes(response.data.id)) {
+            setIsInWishlist(true);
+          }
         }
       } catch (error) {
         console.error('Error fetching product:', error);
       }
     };
-  
+
     if (slug) {
       fetchProduct();
     }
   }, [slug]);
-  
 
   if (loading || !product) {
     return (

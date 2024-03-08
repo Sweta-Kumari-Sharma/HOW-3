@@ -1,10 +1,13 @@
-'use client'
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
-import '../app/globals.css'
+import '../app/globals.css';
 import Navbar from '@/components/Navbar';
+import { addEllipses } from '@/utils/common-utils';
+import { useCart } from '../context/cartContext';
+import { FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface Product {
   id: number;
@@ -20,12 +23,12 @@ interface Product {
 }
 
 const HomePage = () => {
-  const [products, setProducts] = useState<Product[]>([]); // Add type annotation
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://fakestoreapi.com/products");
+        const response = await axios.get<Product[]>("https://fakestoreapi.com/products");
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -37,52 +40,75 @@ const HomePage = () => {
 
   return (
     <>
-    <div className='flex '>
+      <div className='flex flex-col md:flex-col'>
         <div className='w-[15%]'>
-
-        <Navbar/>
+          <Navbar />
         </div>
-    <div className=" mx-auto mr-12 w-[85%]">
-      
-      <h1 className="text-3xl font-bold mb-4">Welcome to the Home Page</h1>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2 hidden md:table-cell">ID</th>
-              <th className="px-4 py-2">Title</th>
-              <th className="px-4 py-2 hidden md:table-cell">Price</th>
-              {/* <th className="px-4 py-2 hidden md:table-cell">Description</th> */}
-              <th className="px-4 py-2 hidden md:table-cell">Category</th>
-              <th className="px-4 py-2">Image</th>
-              <th className="px-4 py-2 hidden md:table-cell">Rating</th>
-              <th className="px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(product => (
-              <motion.tr key={product.id} whileHover={{ scale: 1.1 }} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
-                <td className="border px-4 py-2 hidden md:table-cell">{product.id}</td>
-                <td className="border px-4 py-2">{product.title}</td>
-                <td className="border px-4 py-2 hidden md:table-cell">${product.price}</td>
-                {/* <td className="border px-4 py-2 hidden md:table-cell">{product.description}</td> */}
-                <td className="border px-4 py-2 hidden md:table-cell">{product.category}</td>
-                <td className="border px-4 py-2"><img src={product.image} alt={product.title} className="w-24 h-auto" /></td>
-                <td className="border px-4 py-2 hidden md:table-cell">{product.rating.rate} ({product.rating.count} ratings)</td>
-                <td className="border px-4 py-2">
-                  <Link href={`/product/${product.id}`}>
-                    <div className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">View</div>
-                  </Link>
-                </td>
-              </motion.tr>
+        <div className="p-2 mx-auto md:mr-4 w-[100%] 2 md:w-[85%]">
+          <h1 className="text-xl md:text-3xl font-bold text-center my- mb-4">Our Products</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product, index) => (
+              <ProductCard key={product.id} product={product} />
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </>
   );
 };
+
+const ProductCard = ({ product }: { product: Product }) => {
+  const { addToCart, removeFromCart, addToWishlist, removeFromWishlist, cartItems, wishlistItems } = useCart();
+  const router = useRouter();
+
+  const isInCart = cartItems.includes(product.id);
+  const isInWishlist = wishlistItems.includes(product.id);
+
+  const toggleCart = () => {
+    if (isInCart) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product.id);
+    }
+  };
+
+  const toggleWishlist = () => {
+    if (isInWishlist) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product.id);
+    }
+  };
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white rounded-lg overflow-hidden shadow-md relative"
+    >
+      <img src={product.image} alt={product.title} className="w-full h-64 object-cover" />
+      <div className="p-4">
+        <h2 className="text-xl font-semibold">{addEllipses(product.title, 20)}</h2>
+        <p className="text-gray-600">${product.price}</p>
+        <div className="absolute top-0 right-0 mt-2 mr-2 flex items-center">
+          <div className={`rounded-full bg-white p-2 cursor-pointer ${isInCart ? 'text-blue-500' : 'text-gray-600'}`} onClick={toggleCart}>
+            <FaShoppingCart className={`text-xl ${isInCart ? 'text-blue-500' : ''}`} />
+          </div>
+          <div className={`rounded-full bg-white p-2 ml-2 cursor-pointer ${isInWishlist ? 'text-red-500' : 'text-gray-600'}`} onClick={toggleWishlist}>
+            <FaHeart className={`text-xl ${isInWishlist ? 'text-red-500' : ''}`} />
+          </div>
+        </div>
+        <div className="mt-4">
+          <Link href={`/product/${product.id}`}>
+            <div className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">View</div>
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 
 export default HomePage;

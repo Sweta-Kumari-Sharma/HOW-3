@@ -37,7 +37,7 @@ const HomePage = () => {
   return (
     <div className=" mx-auto">
       
-      <h1 className="text-3xl font-bold mb-4">Welcome to the Home Page</h1>
+      <h1 className="text-xl md:text-3xl font-bold mb-4">Our Products</h1>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
