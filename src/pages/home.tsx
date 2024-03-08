@@ -21,7 +21,7 @@ interface Product {
 const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]); // Add type annotation
   const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
-  const { ref: scrollRef } = useInView({ threshold: 0 });
+  // const { ref: scrollRef } = useInView({ threshold: 0 });
   const lastCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
