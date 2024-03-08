@@ -117,10 +117,10 @@ const ProductPage = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="md:max-w-[80vw] min-w-[70vw] min-h-[70vh] md:max-h-[100vh] bg-white rounded-lg overflow-hidden"
+          className="  min-h-[70vh] md:max-h-[100vh] bg-white rounded-lg overflow-hidden"
         >
           <div className="flex flex-col md:flex-row">
-            <div className=" my-4 p-4 md:max-h-[80vh] md:h-[400px] relative">
+            <div className=" my-4 p-4  relative">
               <ReactImageMagnify
                 smallImage={{
                   alt: 'Product Image',
@@ -150,7 +150,7 @@ const ProductPage = () => {
             <div className="p-6 w-full md:w-1/2 mt-4 md:mt-0">
               <h1 className="text-2xl font-semibold mb-2 text-red-500">{product.title}</h1>
               <p className="text-gray-700 mb-2">Price: ₹{product.price}</p>
-              <p className="text-gray-700 mb-2">Description: {addEllipses(product.description, 100)}</p>
+              <p className="text-gray-700 mb-2">Description: {product.description}</p>
               <p className="text-gray-700 mb-2">Category: {product.category}</p>
               {/* Star rating */}
               <div className="flex flex-col md:flex-row md:items-center">
