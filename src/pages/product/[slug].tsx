@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import '../../app/globals.css';
 import { addEllipses } from '../../utils/common-utils';
 import Image from 'next/image';
-// import ReactImageMagnify from 'react-image-magnify';
+import ReactImageMagnify from 'react-image-magnify';
 
 interface Product {
   id: number;
