@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import Link from 'next/link';
 import '../app/globals.css';
@@ -58,6 +59,7 @@ const HomePage = () => {
 };
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const { ref, inView } = useInView({ triggerOnce: false });
   const { addToCart, removeFromCart, addToWishlist, removeFromWishlist, cartItems, wishlistItems } = useCart();
   const router = useRouter();
 
@@ -81,14 +83,15 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
+    <div ref={ref}>
     <motion.div
       whileHover={{ scale: 1.05 }}
       initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.5 }}
       transition={{ duration: 0.5 }}
       className="bg-white rounded-lg overflow-hidden shadow-md relative"
     >
-      <img src={product.image} alt={product.title} className="w-full h-64 object-cover" />
+      <img src={product.image} alt={product.title} className="h-[150px] mx-auto" />
       <div className="p-4">
         <h2 className="text-xl font-semibold">{addEllipses(product.title, 20)}</h2>
         <p className="text-gray-600">${product.price}</p>
@@ -107,6 +110,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </div>
     </motion.div>
+    </div>
   );
 };
 

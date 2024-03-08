@@ -111,7 +111,7 @@ const ProductPage = () => {
           className="md:max-w-[80vw] min-w-[70vw] min-h-[70vh] md:max-h-[100vh] bg-white rounded-lg overflow-hidden"
         >
           <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-[500px] my-4 p-4 md:h-[500px] relative">
+            <div className=" my-4 p-4 md:h-[500px] relative">
               <ReactImageMagnify
                 smallImage={{
                   alt: 'Product Image',
@@ -127,11 +127,9 @@ const ProductPage = () => {
               />
               {/* Heart icon for wishlist */}
               <FaHeart
-    className={`text-red-500 md:text-[20px] absolute top-4 right-4 cursor-pointer ${
-      isInWishlist ? 'text-red-500' : 'text-gray-500'
-    }`}
-    onClick={toggleWishlist}
-  />
+  className={`text-red-500 md:text-[20px] absolute top-4 right-4 cursor-pointer ${isInWishlist ? 'text-red-500 !important' : 'text-gray-500 !important'}`}
+  onClick={toggleWishlist}
+/>
   {/* Cart icon */}
   {/* <FaShoppingCart
     className={`text-blue-500 md:text-[20px] absolute top-4 right-16 cursor-pointer ${

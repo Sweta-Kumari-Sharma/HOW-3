@@ -1,6 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
 import '../app/globals.css'
@@ -20,6 +20,9 @@ interface Product {
 
 const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]); // Add type annotation
+  const [animatedIndexes, setAnimatedIndexes] = useState<number[]>([]);
+  const { ref: scrollRef } = useInView({ threshold: 0 });
+  const lastCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,6 +36,26 @@ const HomePage = () => {
 
     fetchProducts();
   }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (lastCardRef.current) {
+        const lastCardTop = lastCardRef.current.getBoundingClientRect().top;
+        const isLastCardVisible = lastCardTop < window.innerHeight;
+        if (isLastCardVisible) {
+          const newAnimatedIndexes = [...animatedIndexes];
+          products.forEach((_, index) => {
+            if (!animatedIndexes.includes(index)) {
+              newAnimatedIndexes.push(index);
+            }
+          });
+          setAnimatedIndexes(newAnimatedIndexes);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [animatedIndexes, products]);
 
   return (
     <div className=" mx-auto">
@@ -53,14 +76,15 @@ const HomePage = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
-              <motion.tr key={product.id} whileHover={{ scale: 1.1 }} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
+            {products.map((product, index) => (
+               <div key={product.id} ref={index === products.length - 1 ? lastCardRef : null}>
+              <motion.tr whileHover={{ scale: 1.1 }} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.id}</td>
                 <td className="border px-4 py-2">{product.title}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">${product.price}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.description}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.category}</td>
-                <td className="border px-4 py-2"><img src={product.image} alt={product.title} className="w-[100px] h-[100px]" /></td>
+                <td className="border px-4 py-2"><img src={product.image} alt={product.title}  /></td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.rating.rate} ({product.rating.count} ratings)</td>
                 <td className="border px-4 py-2">
                   <Link href={`/product/${product.id}`}>
@@ -68,6 +92,7 @@ const HomePage = () => {
                   </Link>
                 </td>
               </motion.tr>
+              </div>
             ))}
           </tbody>
         </table>
