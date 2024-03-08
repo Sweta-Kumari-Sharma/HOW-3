@@ -25,7 +25,7 @@ interface Product {
 
 const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const { ref: scrollRef } = useInView<HTMLDivElement>({ threshold: 0 });
+  // const { ref: scrollRef } = useInView<HTMLDivElement>({ threshold: 0 });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -84,7 +84,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div ref={ref}>
+    <div ref={ref as React.RefObject<HTMLDivElement>}>
     <motion.div
       whileHover={{ scale: 1.05 }}
       initial={{ opacity: 0, scale: 0.5 }}
