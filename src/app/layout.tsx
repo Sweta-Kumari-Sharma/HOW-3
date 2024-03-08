@@ -72,7 +72,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-     <CartProvider> {/* Wrap the entire content with CartProvider */}
+     {/* <CartProvider> Wrap the entire content with CartProvider */}
       <html lang="en">
         <body className={inter.className}>
           {/* <Layout> */}
@@ -80,7 +80,7 @@ export default function RootLayout({
             {/* </Layout> */}
         </body>
       </html>
-    </CartProvider>
+    {/* </CartProvider> */}
     </>
   );
 }
