@@ -9,6 +9,8 @@ import { addEllipses } from '@/utils/common-utils';
 import { useCart } from '../context/cartContext';
 import { FaShoppingCart, FaHeart } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 interface Product {
   id: number;
@@ -70,16 +72,20 @@ const ProductCard = ({ product }: { product: Product }) => {
   const toggleCart = () => {
     if (isInCart) {
       removeFromCart(product.id);
+      toastr.success('Product removed from cart')
     } else {
       addToCart(product.id);
+      toastr.success('Product added to cart')
     }
   };
-
+  
   const toggleWishlist = () => {
     if (isInWishlist) {
       removeFromWishlist(product.id);
+      toastr.success('Product removed from wishlist')
     } else {
       addToWishlist(product.id);
+      toastr.success('Product added to wishlist')
     }
   };
 

@@ -13,6 +13,8 @@ import { BounceLoader } from 'react-spinners';
 import { FaTag } from 'react-icons/fa6';
 import Navbar from '@/components/Navbar';
 import { useCart } from '../../context/cartContext';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 // Interface for Product
 interface Product {
@@ -41,18 +43,25 @@ const ProductPage = () => {
     const productID = product?.id as number;
     if (isInWishlist) {
       removeFromWishlist(productID);
+      toastr.success('Product removed from wishlist');
     } else {
       addToWishlist(productID);
+      toastr.success('Product added to wishlist');
     }
     setIsInWishlist(!isInWishlist);
   };
+  useEffect(() => {
+    console.log('whishlist',isInWishlist);
+  }, [isInWishlist])
   
   const toggleCart = () => {
     const productID = product?.id as number;
     if (isInCart) {
       removeFromCart(productID);
+      toastr.success('Product removed from cart')
     } else {
       addToCart(productID);
+      toastr.success('Product added to cart')
     }
     setIsInCart(!isInCart);
   };
@@ -111,7 +120,7 @@ const ProductPage = () => {
           className="md:max-w-[80vw] min-w-[70vw] min-h-[70vh] md:max-h-[100vh] bg-white rounded-lg overflow-hidden"
         >
           <div className="flex flex-col md:flex-row">
-            <div className=" my-4 p-4 md:h-[500px] relative">
+            <div className=" my-4 p-4 md:max-h-[80vh] md:h-[400px] relative">
               <ReactImageMagnify
                 smallImage={{
                   alt: 'Product Image',
@@ -127,7 +136,7 @@ const ProductPage = () => {
               />
               {/* Heart icon for wishlist */}
               <FaHeart
-  className={`text-red-500 md:text-[20px] absolute top-4 right-4 cursor-pointer ${isInWishlist ? 'text-red-500 !important' : 'text-gray-500 !important'}`}
+  className={` md:text-[20px] absolute top-4 right-4 cursor-pointer ${isInWishlist ? 'text-red-500 !important' : 'text-gray-500 !important'}`}
   onClick={toggleWishlist}
 />
   {/* Cart icon */}
