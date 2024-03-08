@@ -25,6 +25,7 @@ interface Product {
 
 const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const { ref: scrollRef } = useInView<HTMLDivElement>({ threshold: 0 });
 
   useEffect(() => {
     const fetchProducts = async () => {
