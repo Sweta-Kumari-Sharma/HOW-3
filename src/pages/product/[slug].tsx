@@ -90,7 +90,6 @@ const ProductPage = () => {
     }
   }, [slug]);
   
-
   if (loading || !product) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -128,11 +127,18 @@ const ProductPage = () => {
               />
               {/* Heart icon for wishlist */}
               <FaHeart
-                className={`text-red-500 md:text-[20px] absolute top-4 right-4 cursor-pointer ${
-                  isInWishlist ? 'text-red-500' : 'text-gray-500'
-                }`}
-                onClick={toggleWishlist}
-              />
+    className={`text-red-500 md:text-[20px] absolute top-4 right-4 cursor-pointer ${
+      isInWishlist ? 'text-red-500' : 'text-gray-500'
+    }`}
+    onClick={toggleWishlist}
+  />
+  {/* Cart icon */}
+  {/* <FaShoppingCart
+    className={`text-blue-500 md:text-[20px] absolute top-4 right-16 cursor-pointer ${
+      isInCart ? 'text-blue-500' : 'text-gray-500'
+    }`}
+    onClick={toggleCart}
+  /> */}
             </div>
             <div className="p-6 w-full md:w-1/2 mt-4 md:mt-0">
               <h1 className="text-2xl font-semibold mb-2 text-red-500">{product.title}</h1>

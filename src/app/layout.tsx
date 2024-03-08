@@ -71,6 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <>
      <CartProvider> {/* Wrap the entire content with CartProvider */}
       <html lang="en">
         <body className={inter.className}>
@@ -80,5 +81,6 @@ export default function RootLayout({
         </body>
       </html>
     </CartProvider>
+    </>
   );
 }
