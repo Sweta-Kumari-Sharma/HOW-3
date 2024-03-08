@@ -101,7 +101,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <img src={product.image} alt={product.title} className="h-[150px] mx-auto" />
       <div className="p-4">
         <h2 className="text-xl font-semibold">{addEllipses(product.title, 20)}</h2>
-        <p className="text-gray-600">${product.price}</p>
+        <p className="text-gray-600">₹{product.price}</p>
         <div className="absolute top-0 right-0 mt-2 mr-2 flex items-center">
           <div className={`rounded-full bg-white p-2 cursor-pointer ${isInCart ? 'text-blue-500' : 'text-gray-600'}`} onClick={toggleCart}>
             <FaShoppingCart className={`text-xl ${isInCart ? 'text-blue-500' : ''}`} />

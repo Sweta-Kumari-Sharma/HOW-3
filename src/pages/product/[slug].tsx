@@ -149,7 +149,7 @@ const ProductPage = () => {
             </div>
             <div className="p-6 w-full md:w-1/2 mt-4 md:mt-0">
               <h1 className="text-2xl font-semibold mb-2 text-red-500">{product.title}</h1>
-              <p className="text-gray-700 mb-2">Price: ${product.price}</p>
+              <p className="text-gray-700 mb-2">Price: ₹{product.price}</p>
               <p className="text-gray-700 mb-2">Description: {addEllipses(product.description, 100)}</p>
               <p className="text-gray-700 mb-2">Category: {product.category}</p>
               {/* Star rating */}

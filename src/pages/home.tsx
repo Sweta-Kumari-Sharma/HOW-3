@@ -81,7 +81,7 @@ const HomePage = () => {
               <motion.tr whileHover={{ scale: 1.1 }} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.id}</td>
                 <td className="border px-4 py-2">{product.title}</td>
-                <td className="border px-4 py-2 hidden md:table-cell">${product.price}</td>
+                <td className="border px-4 py-2 hidden md:table-cell">₹{product.price}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.description}</td>
                 <td className="border px-4 py-2 hidden md:table-cell">{product.category}</td>
                 <td className="border px-4 py-2"><img src={product.image} alt={product.title}  /></td>

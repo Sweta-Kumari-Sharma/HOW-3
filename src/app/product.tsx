@@ -41,7 +41,7 @@ const ProductPage = () => {
   return (
     <div>
       <h1>{product.title}</h1>
-      <p>Price: ${product.price}</p>
+      <p>Price: ₹{product.price}</p>
       {/* <p>Description: { product.description}</p> */}
       <p>Category: {product.category}</p>
       <p>Rating: {product.rating.rate} ({product.rating.count} ratings)</p>
